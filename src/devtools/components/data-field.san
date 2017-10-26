@@ -1,0 +1,80 @@
+<template>
+	<div class="data-field">
+		<div class="data-field-title">
+			state
+		</div>
+		<div id="container" class="data-field-data">
+			<div s-for="item, index in showData" index="{{index}}">
+				<div data-value="{{item}}">
+					<span s-if="item.isExpand">
+						>
+					</span>
+					{{item.key}}: {{item.value}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+import { insertChild } from '../utils';
+import childFiled from './child-field';
+export default {
+	components: {
+		
+	},
+	initData() {
+		return {
+			data: {},
+			showData: {
+				key: '',
+				value: undefined,
+				type: 'Object',
+				path: 'showData',
+				deep: 1,
+				isExpand: false,
+				child: []
+			}
+		};
+	},
+	expand(tagData, init = false) {
+		let deep, data, isExpand, path;
+		if (init === true) {
+			deep = 1;
+			data = tagData;
+			isExpand = false;
+			path = 'showData';
+		} else {
+			deep = tagData.deep;
+			data = tageData.value;
+			isExpand = tageData.isExpand;
+			path = tageData.path;
+		}
+
+		switch(isExpand) {
+			case undefined:
+				return;
+				break;
+			case true:
+				this.data.set(path + 'child', []);
+				break;
+			case false:
+				insertChild(data, this);
+				break;
+		}
+	},
+	attached() {
+		const self = this;
+		const app = document.getElementById('container');
+		app.addEventListener('click', function(e) {
+			e.stopPropagation();
+			const target = e.target;
+			const temp = target.dataset.value;
+			if (temp.isExpand !== undefined) {
+				self.extend(temp);
+			}
+		});
+		this.expand(this.data, true);
+	}
+};
+</script>

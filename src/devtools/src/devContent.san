@@ -1,0 +1,59 @@
+<template>
+	<div class="dev-content">
+		<div class="action-list-container">
+			<action-item s-for="item,index in actionList" index="{{index}}"
+				data="{{item}}">
+			</action-item>
+		</div>
+		<div class="state-info">
+			<inspect-info data="{{actionList[0]}}"></inspect-info>
+		</div>
+	</div>
+</template>
+
+<style lang="scss">
+	.dev-content {
+		display: flex;
+		flex-direction: row;
+		.action-list-container {
+			flex: 3;
+			display: flex;
+			flex-direction: column;
+		}
+		.state-info {
+			flex: 7;
+		}
+	}
+</style>
+
+<script>
+/*
+	actionList: [{
+		id: '3',
+		name: '',
+		payload: ...,
+		diff: ,
+		newValue: ,
+		oldValue: ,
+		childs: ['1', '2'],
+		done: true,
+		startTime: ,
+		endTime: ,
+		parentId: ''
+	}]
+*/
+import actionItem from 'components/action-item';
+import inspectInfo from './inspect-info';
+import { connect } from 'san-store';
+
+export default connect.san(
+	{
+		actionList: 'actionList'
+	}
+)({
+	components: {
+		'action-item': actionItem,
+		'inspect-info': inspectInfo
+	}
+});
+</script>

@@ -1,0 +1,39 @@
+<template>
+	<div class="action-item">
+		<span class="action-name">{{ data.name }}</span>
+		<span class="action-inspected">inspected</span>
+		<span class="action-active">active</span>
+		<span class="action-time">{{ data.startTime }}</span>
+	</div>
+</template>
+
+<style lang="scss">
+	.action-item {
+		height: 35px;
+		display: flex;
+		flex-direction: row;
+		.action-name {
+			flex: 2;
+		}
+		.action-inspected {
+			flex: 1;
+		}
+		.action-active {
+			flex: 1;
+		}
+		.action-time {
+			flex: 1;
+		}
+	}
+</style>
+
+<script>
+export default {
+	initData() {
+		return {
+			index: 0,
+			data: {}
+		};
+	}
+}
+</script>

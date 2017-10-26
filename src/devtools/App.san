@@ -1,0 +1,34 @@
+<template>
+	<div class="root">
+		<dev-header class="header"></dev-header>
+		<dev-content class="content"></dev-content>
+	</div>
+</template>
+
+<style lang="scss">
+	.root {
+		display: flex;
+		flex-direction: column;
+		.header {
+			height: 120px;
+			background: yellow;
+		}
+		.content {
+			flex: 1;
+		}
+	}
+</style>
+
+<script>
+import './assets/css/reset';
+import './store';
+import devHeader from 'components/devHeader';
+import devContent from './src/devContent';
+
+export default {
+	components: {
+		'dev-header': devHeader,
+		'dev-content': devContent
+	}
+};
+</script>

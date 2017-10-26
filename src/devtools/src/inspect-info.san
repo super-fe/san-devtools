@@ -1,0 +1,36 @@
+<template>
+	<div class="inspect-content">
+		<div class="inspect-state">
+			<data-field data="{{data.state}}"></data-field>
+		</div>
+		<div class="inspect-diff">
+		</div>
+		<div class="inspect-action">
+		</div>
+	</div>
+</template>
+
+<style>
+
+</style>
+
+<script>
+import dataField from 'components/data-field';
+
+export default {
+	components: {
+		'data-field': dataField
+	},
+	initData() {
+		return {
+			data: {
+				state: {},
+				newValue: {},
+				oldValue: {},
+				name: '',
+				payload: undefined
+			}
+		};
+	}
+};
+</script>
