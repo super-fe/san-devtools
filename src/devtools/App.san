@@ -2,6 +2,8 @@
 	<div class="root">
 		<dev-header class="header"></dev-header>
 		<dev-content class="content-container" activeContent="{{activeContent}}"></dev-content>
+		<div id="apps">
+		</div>
 	</div>
 </template>
 
@@ -32,6 +34,7 @@ import './assets/css/index.css';
 import './store';
 import devHeader from 'components/devHeader';
 import devContent from './src/devContent';
+import { tree } from 'd3-state-visualizer';
 
 export default {
 	initData() {

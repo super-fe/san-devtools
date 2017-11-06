@@ -5,10 +5,10 @@
 	</div>
 </template>
 
+
 <script>
-/*
-import { tree } from 'd3-state-visualizer';
-import { makeConfig } from '../utils';
+//import { tree } from 'd3-state-visualizer';
+//import { makeConfig } from '../utils';
 
 export default {
 	initData() {
@@ -17,10 +17,12 @@ export default {
 		};
 	},
 	attached() {
+		/*
 		const state = this.data.get('data.state');
 		const config = makeConfig(state);
 		const render = tree(document.getElementById('tree-state'), config);
 		render();
+		*/
 	}
-};*/
+};
 </script>
