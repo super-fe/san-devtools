@@ -1,4 +1,3 @@
-// The bridge in communication
 import { EventEmitter } from 'events';
 
 export default class bridge extends EventEmitter {

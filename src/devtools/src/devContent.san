@@ -2,11 +2,18 @@
 	<div class="dev-content">
 		<div class="action-list-container">
 			<action-item s-for="item,index in actionList" index="{{index}}"
-				data="{{item}}">
+				data="{{item}}" on-click="inspectChange(index)" activeIndex="{{activeIndex}}" s-if="actionList.length > 0">
 			</action-item>
 		</div>
-		<div class="state-info">
-			<inspect-info data="{{actionList[0]}}"></inspect-info>
+		<div class="state-info" s-if="activeContent=== 'flow'">
+			<div class="state-header-controller">
+				<span>Recording</span>
+			</div>
+			<inspect-store data="{{inspectInfo}}" s-if="inspectInfo">
+			</inspect-store>
+		</div>
+		<div class="state-info" s-if="activeContent=== 'tree'">
+			<tree-state data="{{inspectInfo}}"></tree-state>
 		</div>
 	</div>
 </template>
@@ -15,45 +22,92 @@
 	.dev-content {
 		display: flex;
 		flex-direction: row;
+		height: 100%;
 		.action-list-container {
-			flex: 3;
+			width: 50%;
+			height: 100%;
 			display: flex;
 			flex-direction: column;
+			border-right: 1px solid #ddd;
+			overflow: auto;
 		}
 		.state-info {
-			flex: 7;
+			width: 50%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			.state-header-controller {
+				height: 50px;
+				box-sizing: border-box;
+				padding: 0 10px;
+				color: #666;
+				border-bottom: 1px solid #ddd;
+				font-size: 12px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				span {
+					cursor: pointer;
+					transition: opacity .25s;
+					opacity: 0.8;
+					&.active {
+						color: red;
+					}
+				}
+			}
 		}
 	}
 </style>
 
 <script>
-/*
-	actionList: [{
-		id: '3',
-		name: '',
-		payload: ...,
-		diff: ,
-		newValue: ,
-		oldValue: ,
-		childs: ['1', '2'],
-		done: true,
-		startTime: ,
-		endTime: ,
-		parentId: ''
-	}]
-*/
 import actionItem from 'components/action-item';
-import inspectInfo from './inspect-info';
+import inspectStore from './inspect-store';
 import { connect } from 'san-store';
+import { searchActionByName } from '../utils';
+import treeState from 'components/tree-state';
 
 export default connect.san(
 	{
 		actionList: 'actionList'
 	}
 )({
+	initData() {
+		return {
+			actionName: '',
+			activeIndex: 0,
+			activeContent: 'flow'
+		};
+	},
+	computed: {
+		inspectInfo() {
+			const actionList = this.data.get('actionList');
+			if (!actionList) {
+				return false;
+			}
+			if (actionList.length === 0) {
+				return false;
+			}
+			return actionList[actionList.length - 1 ];
+		},
+		activeIndex() {
+			const actionList = this.data.get('actionList'); 
+			if (!actionList) {
+				return 0;
+			}
+			return actionList.length - 1;
+		}
+	},
 	components: {
 		'action-item': actionItem,
-		'inspect-info': inspectInfo
+		'inspect-store': inspectStore,
+		'tree-state': treeState
+	},
+	messages: {
+		'inspect-change'(arg) {
+			const index = arg.value;
+			this.data.set('activeIndex', index);
+			this.data.set('inspectInfo', this.data.get('actionList')[index]);
+		}
 	}
 });
 </script>

@@ -7,6 +7,9 @@
     "build": "cd shells/chrome && cross-env NODE_ENV=production node build.js"
   },
   "dependencies": {
+    "d3-state-visualizer": "^1.3.1",
+    "jquery": "^3.2.1",
+    "object-json-tree": "^1.0.0",
     "san": "^3.2.4",
     "san-store": "^1.0.1",
     "san-update": "^2.1.0"

@@ -14,7 +14,11 @@ store.addAction('receive-baseState', (baseState, {getState, dispatch}) => {
 		return;
 	}
 	dispatch('init_actionList');
-	return updateBuilder().set('baseState', baseState);
+	return updateBuilder().push('actionList', {
+		name: 'Base State',
+		state: baseState,
+		startTime: new Date()
+	});
 });
 
 store.addAction('init_actionList', () => {

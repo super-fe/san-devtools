@@ -1,0 +1,26 @@
+<template>
+	<div class="tree-state">
+		<div id="tree-state">
+		</div>
+	</div>
+</template>
+
+<script>
+/*
+import { tree } from 'd3-state-visualizer';
+import { makeConfig } from '../utils';
+
+export default {
+	initData() {
+		return {
+			data: {}
+		};
+	},
+	attached() {
+		const state = this.data.get('data.state');
+		const config = makeConfig(state);
+		const render = tree(document.getElementById('tree-state'), config);
+		render();
+	}
+};*/
+</script>

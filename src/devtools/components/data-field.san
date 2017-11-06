@@ -1,80 +1,60 @@
 <template>
 	<div class="data-field">
-		<div class="data-field-title">
-			state
+		<div class="data-field-action" s-if="type === 'Action'">
+			<div id="Action-container">
+			</div>
 		</div>
-		<div id="container" class="data-field-data">
-			<div s-for="item, index in showData" index="{{index}}">
-				<div data-value="{{item}}">
-					<span s-if="item.isExpand">
-						>
-					</span>
-					{{item.key}}: {{item.value}}
-				</div>
+		<div class="data-field-diff" s-if="type === 'Diff'">
+			<div id="Diff-container">
+			</div>
+		</div>
+		<div class="data-field-state" s-if="type === 'State'">
+			<div id="State-container">
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { insertChild } from '../utils';
-import childFiled from './child-field';
+import jsonView from 'object-json-tree';
+import san from 'san';
+import $ from 'jquery';
+
 export default {
-	components: {
-		
-	},
 	initData() {
 		return {
 			data: {},
-			showData: {
-				key: '',
-				value: undefined,
-				type: 'Object',
-				path: 'showData',
-				deep: 1,
-				isExpand: false,
-				child: []
-			}
+			objectTree: {},
+			type: ''
 		};
 	},
-	expand(tagData, init = false) {
-		let deep, data, isExpand, path;
-		if (init === true) {
-			deep = 1;
-			data = tagData;
-			isExpand = false;
-			path = 'showData';
-		} else {
-			deep = tagData.deep;
-			data = tageData.value;
-			isExpand = tageData.isExpand;
-			path = tageData.path;
+	deleteObjectTree() {
+		const type = this.data.get('type');
+		const containerDom = document.getElementById(type + '-container');
+		if (!containerDom) {
+			return ;
 		}
-
-		switch(isExpand) {
-			case undefined:
-				return;
-				break;
-			case true:
-				this.data.set(path + 'child', []);
-				break;
-			case false:
-				insertChild(data, this);
-				break;
-		}
+ 		if (!containerDom.hasChildNodes()) {
+ 			return ;
+ 		}
+ 		containerDom.removeChild(containerDom.childNodes[0]);
+	},
+	createObjectTree() {
+		this.deleteObjectTree();
+		const type = this.data.get('type');
+		const containerDom = document.getElementById(type + '-container');
+		const view = new jsonView(type, this.data.get('data'));
+		view.expand(false);
+		containerDom.appendChild(view.dom);
 	},
 	attached() {
-		const self = this;
-		const app = document.getElementById('container');
-		app.addEventListener('click', function(e) {
-			e.stopPropagation();
-			const target = e.target;
-			const temp = target.dataset.value;
-			if (temp.isExpand !== undefined) {
-				self.extend(temp);
-			}
+		this.createObjectTree();
+		this.watch('data', function(data) {
+			this.createObjectTree();
 		});
-		this.expand(this.data, true);
+	},
+	disposed() {
+		this.deleteObjectTree();
 	}
 };
 </script>

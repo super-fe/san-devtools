@@ -21,7 +21,7 @@ module.exports = {
     extensions: ['.san', '.js', '.css', '.scss', '*'],
     alias: {
       src: path.resolve(__dirname, '../../src'),
-      components: path.resolve(__dirname, '../../src/devtools/components')
+      components: path.resolve(__dirname, '../../src/devtools/components')   
     }
   },
   module: {
@@ -48,7 +48,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'css-loader'
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|woff2|svg)$/,

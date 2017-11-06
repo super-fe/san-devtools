@@ -1,29 +1,55 @@
 <template>
-	<div class="action-item">
+	<div class="action-item {{index === activeIndex ? 'active-item-active' : ''}}" on-click="inspectChange" on-click="inspectChange">
 		<span class="action-name">{{ data.name }}</span>
-		<span class="action-inspected">inspected</span>
-		<span class="action-active">active</span>
-		<span class="action-time">{{ data.startTime }}</span>
+		<span class="action-time">{{ time }}</span>
+		<span class="action-active" s-if="index===activeIndex">active</span>
+		<span class="action-inspected" s-if="index===activeIndex">inspected</span>
 	</div>
 </template>
 
 <style lang="scss">
 	.action-item {
-		height: 35px;
-		display: flex;
-		flex-direction: row;
+		height: 40px;
+		box-shadow: 0 1px 5px rgba(0,0,0,.12);
+		padding: 10px 20px;
+		font-size: 9px;
+		cursor: pointer;
+		color: #444;
+		span {
+			display: inline-block;
+			vertical-align: middle;
+		}
 		.action-name {
-			flex: 2;
+			line-height: 20px;
 		}
 		.action-inspected {
-			flex: 1;
+			float: right;
+			font-size: 10px;
+			box-sizing: border-box;
+			border-radius: 6px;
+			margin-right: 8px;
+			padding: 4px 8px;
+			background-color: #9c76cb;
+			box-sizing: border-box;
 		}
 		.action-active {
-			flex: 1;
+			float: right;
+			font-size: 10px;
+			box-sizing: border-box;
+			border-radius: 6px;
+			margin-right: 8px;
+			padding: 4px 8px;
+			background-color: #9c76cb;
+			box-sizing: border-box;
 		}
 		.action-time {
-			flex: 1;
+			float: right;
+			font-size: 11px;
 		}
+	}
+	.active-item-active {
+		color: #fff;
+		background-color: #70abe8;
 	}
 </style>
 
@@ -32,8 +58,22 @@ export default {
 	initData() {
 		return {
 			index: 0,
+			activeIndex: 0,
 			data: {}
 		};
+	},
+	computed: {
+		time() {
+			return (new Date(this.data.get('data').startTime)).toTimeString().slice(0, 8);
+		}
+	},
+	inspectChange() {
+		this.dispatch('inspect-change', this.data.get('index'));
+	},
+	created() {
+		const data = this.data.get('data');
+		console.log(this.data.get('index'));
+		console.log('create action item');
 	}
 }
 </script>

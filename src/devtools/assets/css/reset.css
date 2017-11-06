@@ -1,7 +1,15 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-family: Roboto;
+	font-size: 16px;
+	color: #444;
 }
 div {
 	margin: 0;
+	padding: 0;
 }
+html, body {
+	height: 100%;
+}
+

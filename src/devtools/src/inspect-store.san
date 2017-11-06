@@ -1,0 +1,67 @@
+<template>
+	<div class="inspect-content">
+		<div class="inspect-state">
+			<data-field data="{{state}}" type="{{'State'}}" s-if="state"></data-field>
+		</div>
+		<div class="inspect-action">
+			<data-field data="{{action}}" type="{{'Action'}}" s-if="action"></data-field>
+		</div>
+		<div class="inspect-diff">
+			<data-field data="{{diff}}" type="{{'Diff'}}" s-if="diff"></data-field>
+		</div>
+	</div>
+</template>
+
+<style lang="scss">
+	.inspect-content {
+		display: flex;
+		flex-wrap: wrap;
+		padding-top: 20px;
+		width: 100%;
+		box-sizing: border-box;
+		padding-left: 20px;
+		.inspect-state {
+			width: 50%;
+		}
+		.inspect-diff {
+			width: 50%;
+		}
+		.inspect-action {
+			margin-top: 30px;
+			width: 50%;
+		}
+	}
+</style>
+
+<script>
+import dataField from 'components/data-field';
+
+export default {
+	components: {
+		'data-field': dataField
+	},
+	initData() {
+		return {
+			data: {
+			}
+		};
+	},
+	computed: {
+		state() {
+			return this.data.get('data.state');
+		},
+		diff() {
+			return this.data.get('data.diff');
+		},
+		action() {
+			if (!this.data.get('data.payload')) {
+				return false;
+			}
+			return {
+				name: this.data.get('data.name'),
+				payload: this.data.get('data.payload')
+			};
+		}
+	}
+};
+</script>
