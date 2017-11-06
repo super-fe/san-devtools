@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'development') {
 	sanDevHook(store);
 }
 ```
+![](https://github.com/super-fe/san-devtools/blob/master/show.png)
 ## Attention
 This  repositories is not very stable. It may have some unpleasant point and bugs, and you can issue and pr to it. We are appreciate your help. 
 And we will fix some bugs and functions in a while.
