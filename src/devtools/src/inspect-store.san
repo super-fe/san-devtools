@@ -3,11 +3,11 @@
 		<div class="inspect-state">
 			<data-field data="{{state}}" type="{{'State'}}" s-if="state"></data-field>
 		</div>
-		<div class="inspect-action">
-			<data-field data="{{action}}" type="{{'Action'}}" s-if="action"></data-field>
-		</div>
 		<div class="inspect-diff">
 			<data-field data="{{diff}}" type="{{'Diff'}}" s-if="diff"></data-field>
+		</div>
+		<div class="inspect-action">
+			<data-field data="{{action}}" type="{{'Action'}}" s-if="action"></data-field>
 		</div>
 	</div>
 </template>
